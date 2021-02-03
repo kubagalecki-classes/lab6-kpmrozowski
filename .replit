@@ -1,2 +1,2 @@
 language = "cpp"
-run = "chmod +x ./run_lab.sh; ./run_lab.sh"
+run = "chmod +x ./run_zal.sh; ./run_zal.sh"

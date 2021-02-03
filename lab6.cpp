@@ -1,31 +1,10 @@
 #include <algorithm>
-#include <iomanip>
+#include <cassert>
 #include <iostream>
-#include <random>
-#include <type_traits>
+#include <numeric>
 #include <vector>
 
-/* Ćwiczenie X - std::partition i std::sort "sortowanie elementów wektora mniejszych od wartości" */
-
-template < typename T >
-std::vector< T > make_random_vector(size_t size, T min_value, T max_value)
-{
-    static_assert(std::is_arithmetic_v< T >, "T must be an arithmetic type");
-
-    std::mt19937     prng{std::random_device{}()};
-    std::vector< T > ret_v;
-    ret_v.reserve(size);
-    auto bi = std::back_inserter(ret_v);
-
-    using dist_t = std::conditional_t< std::is_integral_v< T >,
-                                       std::uniform_int_distribution< T >,
-                                       std::uniform_real_distribution< T > >;
-
-    dist_t dist{min_value, max_value};
-    std::generate_n(bi, size, [&]() { return dist(prng); });
-
-    return ret_v;
-}
+/* Ćwiczenie XI - std::sorted_indices "sortowanie elementów wektora większych od wartości" */
 
 void print_vector(std::vector< int > wektor)
 {
@@ -34,21 +13,30 @@ void print_vector(std::vector< int > wektor)
     std::cout << std::endl;
 }
 
-void partitionAndSort()
+template < typename ConstIt, typename Comp >
+std::vector< size_t > sorted_indices(ConstIt first, ConstIt last, Comp compare)
 {
-    std::vector< int > wektor = make_random_vector< int >(15, 0, 9);
-    std::cout << "Wygenerowany wektor:" << std::endl;
-    print_vector(wektor);
+    std::vector< size_t > wektor(std::distance(first, last));
+    std::iota(wektor.begin(), wektor.end(), 0u);
 
-    std::sort(wektor.begin(),
-              std::partition(wektor.begin(), wektor.end(), [](int i) { return (i > 5); }));
-
-    std::cout << "Wygenerowany po partycji i posortowaniu liczb wiekszych od 6:" << std::endl;
-    print_vector(wektor);
+    std::sort(wektor.begin(), wektor.end(), [&](size_t a, size_t b) {
+        return compare(first[a], first[b]);
+    });
+    return wektor;
 }
 
 int main()
 {
-    partitionAndSort();
+    std::vector< unsigned > v = {1, 4, 0, 3, 4, 5};
+    auto                    r = sorted_indices(v.begin(), v.end(), std::less< unsigned >{});
+    unsigned int            a = 0;
+    for (size_t i = 0; i < v.size(); ++i) {
+        assert(a <= v[r[i]]);
+        a = v[r[i]];
+    }
     return 0;
 }
+
+/* Po uruchomieniu otrzymano:
+
+*/
