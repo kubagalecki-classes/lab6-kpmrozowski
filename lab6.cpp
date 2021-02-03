@@ -31,11 +31,16 @@ void printVector(std::vector< int > wektor)
     std::cout << std::endl;
 }
 
+bool isGreater(int i, int j)
+{
+    return (i > j);
+}
+
 int main()
 {
     std::vector< int > wektor = makeRandomVector< int >(10, 0, 10);
     printVector(wektor);
-    std::sort(wektor.begin(), wektor.end());
+    std::sort(wektor.begin(), wektor.end(), isGreater);
     printVector(wektor);
     std::cout << "Liczba wystapien elementu 7:";
     std::cout << std::count(wektor.begin(), wektor.end(), 7) << std::endl;
