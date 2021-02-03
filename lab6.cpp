@@ -5,7 +5,7 @@
 #include <type_traits>
 #include <vector>
 
-/* Ćwiczenie VIII - std::any_of */
+/* Ćwiczenie IX - std::transform */
 
 template < typename T >
 std::vector< T > make_random_vector(size_t size, T min_value, T max_value)
@@ -34,19 +34,22 @@ void print_float_vector(std::vector< float > wektor)
     std::cout << std::endl;
 }
 
-void anyMoreThan0p9()
+void sinOfaVect()
 {
-    std::vector< float > wektor = make_random_vector< float >(10, -1., 1.);
+    std::vector< float > wektor = make_random_vector< float >(5, -1., 1.);
     std::cout << "Wygenerowany wektor:" << std::endl;
     print_float_vector(wektor);
-    if (std::any_of(wektor.begin(), wektor.end(), [&](float i) { return (i > 0.9); }))
-        std::cout << "Jest element wiekszy od 0.9" << std::endl;
-    else
-        std::cout << "Nie ma elementu wiekszego od 0.9" << std::endl;
+    std::vector< float > wektorSinusow(5);
+
+    std::transform(
+        wektor.begin(), wektor.end(), wektorSinusow.begin(), [&](float i) { return sin(i); });
+
+    std::cout << "Wektor sinusow:" << std::endl;
+    print_float_vector(wektorSinusow);
 }
 
 int main()
 {
-    anyMoreThan0p9();
+    sinOfaVect();
     return 0;
 }
