@@ -36,13 +36,13 @@ bool isGreater(int i, int j)
     return (i > j);
 }
 
-// Global Variable
-int a;
-
-bool isGreaterThana(int i)
+class isGreaterThana
 {
-    return (i > a);
-}
+public:
+    isGreaterThana(int _a) : a{_a} {}
+    int  a;
+    bool operator()(int i) { return (i > a); }
+};
 
 int main()
 {
@@ -53,7 +53,9 @@ int main()
     std::cout << "Liczba wystapien elementu 7:";
     std::cout << std::count(wektor.begin(), wektor.end(), 7) << std::endl;
     std::cout << "Podaj liczbe:" << std::endl;
+    int a;
     std::cin >> a;
+    isGreaterThana isOrIsnt{a};
     std::cout << "Liczba wystapien elementow wiekszych od podanej liczby:" << std::endl;
-    std::cout << std::count_if(wektor.begin(), wektor.end(), isGreaterThana) << std::endl;
+    std::cout << std::count_if(wektor.begin(), wektor.end(), isOrIsnt) << std::endl;
 }
