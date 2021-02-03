@@ -36,14 +36,6 @@ bool isGreater(int i, int j)
     return (i > j);
 }
 
-class isGreaterThana
-{
-public:
-    isGreaterThana(int _a) : a{_a} {}
-    int  a;
-    bool operator()(int i) { return (i > a); }
-};
-
 int main()
 {
     std::vector< int > wektor = makeRandomVector< int >(10, 0, 10);
@@ -55,7 +47,7 @@ int main()
     std::cout << "Podaj liczbe:" << std::endl;
     int a;
     std::cin >> a;
-    isGreaterThana isOrIsnt{a};
     std::cout << "Liczba wystapien elementow wiekszych od podanej liczby:" << std::endl;
-    std::cout << std::count_if(wektor.begin(), wektor.end(), isOrIsnt) << std::endl;
+    std::cout << std::count_if(wektor.begin(), wektor.end(), [&](int i) { return (i > a); })
+              << std::endl;
 }
