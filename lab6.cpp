@@ -1,10 +1,11 @@
 #include <algorithm>
+#include <iomanip>
 #include <iostream>
 #include <random>
 #include <type_traits>
 #include <vector>
 
-/* Ćwiczenie V - std::find i std::sort */
+/* Ćwiczenie VIII - std::any_of */
 
 template < typename T >
 std::vector< T > make_random_vector(size_t size, T min_value, T max_value)
@@ -26,27 +27,26 @@ std::vector< T > make_random_vector(size_t size, T min_value, T max_value)
     return ret_v;
 }
 
-void print_vector(std::vector< int > wektor)
+void print_float_vector(std::vector< float > wektor)
 {
-    for (const int i : wektor)
-        std::cout << i << " ";
+    for (const float i : wektor)
+        std::cout << std::fixed << std::setprecision(2) << i << std::endl;
     std::cout << std::endl;
 }
 
-void findAndMoveAtEnd()
+void anyMoreThan0p9()
 {
-    std::vector< int > wektor = make_random_vector< int >(10, 0, 10);
+    std::vector< float > wektor = make_random_vector< float >(10, -1., 1.);
     std::cout << "Wygenerowany wektor:" << std::endl;
-    print_vector(wektor);
-
-    std::rotate(wektor.begin(), std::find(wektor.begin(), wektor.end(), 7), wektor.end());
-
-    std::cout << "Obrocony wektor:" << std::endl;
-    print_vector(wektor);
+    print_float_vector(wektor);
+    if (std::any_of(wektor.begin(), wektor.end(), [&](float i) { return (i > 0.9); }))
+        std::cout << "Jest element wiekszy od 0.9" << std::endl;
+    else
+        std::cout << "Nie ma elementu wiekszego od 0.9" << std::endl;
 }
 
 int main()
 {
-    findAndMoveAtEnd();
+    anyMoreThan0p9();
     return 0;
 }
