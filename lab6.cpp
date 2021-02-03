@@ -1,21 +1,21 @@
-#include <algorithm>
 #include <iostream>
-#include <string>
+#include <vector>
+#include <numeric>
 
-/* Ćwiczenie III - std::reverse */
+/* Ćwiczenie IV - std::inner_product */
 
-void makeInputReversed()
+void scalarProductExample()
 {
-    std::string s;
-    std::cout << "Podaj ciag znakow" << std::endl;
-    std::cin >> s;
-    std::reverse(s.begin(), s.end());
-    std::cout << "Ciag znakow od tylu" << std::endl;
-    std::cout << s << std::endl;
+    std::vector< float > first{1., 2., 3.};
+    std::vector< float > second{1.1, 2.2, 3.3};
+    float                ip = std::inner_product(first.begin(), first.end(), second.begin(), 0.);
+    std::cout << "Iloczny sklarny:" << std::endl;
+    /* 1. * 1.1 + 2. * 2.2 + 3. * 3.3. = 1.1 + 4.4. + 9.9 = 15.4 */
+    std::cout << ip << std::endl;
 }
 
 int main()
 {
-    makeInputReversed();
+    scalarProductExample();
     return 0;
 }
