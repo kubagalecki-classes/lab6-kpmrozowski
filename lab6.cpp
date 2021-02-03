@@ -33,22 +33,20 @@ void print_vector(std::vector< int > wektor)
     std::cout << std::endl;
 }
 
-void idiomRemoveErase()
+void findAndMoveAtEnd()
 {
     std::vector< int > wektor = make_random_vector< int >(10, 0, 10);
     std::cout << "Wygenerowany wektor:" << std::endl;
     print_vector(wektor);
-    std::cout << "size:" << std::endl << wektor.size() << std::endl << std::endl;
 
-    wektor.erase(std::remove(wektor.begin(), wektor.end(), 3), wektor.end());
+    std::rotate(wektor.begin(), std::find(wektor.begin(), wektor.end(), 7), wektor.end());
 
-    std::cout << "Wektor po usunieciu liczby 3:" << std::endl;
+    std::cout << "Obrocony wektor:" << std::endl;
     print_vector(wektor);
-    std::cout << "size:" << std::endl << wektor.size() << std::endl;
 }
 
 int main()
 {
-    idiomRemoveErase();
+    findAndMoveAtEnd();
     return 0;
 }
