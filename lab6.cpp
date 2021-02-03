@@ -1,21 +1,51 @@
+#include <algorithm>
 #include <iostream>
+#include <random>
+#include <type_traits>
 #include <vector>
-#include <numeric>
 
-/* Ćwiczenie IV - std::inner_product */
+/* Ćwiczenie V - std::find i std::sort */
 
-void scalarProductExample()
+template < typename T >
+std::vector< T > make_random_vector(size_t size, T min_value, T max_value)
 {
-    std::vector< float > first{1., 2., 3.};
-    std::vector< float > second{1.1, 2.2, 3.3};
-    float                ip = std::inner_product(first.begin(), first.end(), second.begin(), 0.);
-    std::cout << "Iloczny sklarny:" << std::endl;
-    /* 1. * 1.1 + 2. * 2.2 + 3. * 3.3. = 1.1 + 4.4. + 9.9 = 15.4 */
-    std::cout << ip << std::endl;
+    static_assert(std::is_arithmetic_v< T >, "T must be an arithmetic type");
+
+    std::mt19937     prng{std::random_device{}()};
+    std::vector< T > ret_v;
+    ret_v.reserve(size);
+    auto bi = std::back_inserter(ret_v);
+
+    using dist_t = std::conditional_t< std::is_integral_v< T >,
+                                       std::uniform_int_distribution< T >,
+                                       std::uniform_real_distribution< T > >;
+
+    dist_t dist{min_value, max_value};
+    std::generate_n(bi, size, [&]() { return dist(prng); });
+
+    return ret_v;
+}
+
+void print_vector(std::vector< int > wektor)
+{
+    for (const int i : wektor)
+        std::cout << i << " ";
+    std::cout << std::endl;
+}
+
+void sortSubVector()
+{
+    std::vector< int > wektor = make_random_vector< int >(15, 0, 9);
+    std::cout << "Wygenerowany wektor:" << std::endl;
+    print_vector(wektor);
+    std::vector< int >::iterator it = std::find(wektor.begin(), wektor.end(), 7);
+    std::sort(wektor.begin(), it);
+    std::cout << "Wektor posortowany przed pierwszym wystapieniem liczby 7:" << std::endl;
+    print_vector(wektor);
 }
 
 int main()
 {
-    scalarProductExample();
+    sortSubVector();
     return 0;
 }
