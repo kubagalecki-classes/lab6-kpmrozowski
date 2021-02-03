@@ -37,4 +37,6 @@ int main()
     printVector(wektor);
     std::sort(wektor.begin(), wektor.end());
     printVector(wektor);
+    std::cout << "Liczba wystapien elementu 7:";
+    std::cout << std::count(wektor.begin(), wektor.end(), 7) << std::endl;
 }
