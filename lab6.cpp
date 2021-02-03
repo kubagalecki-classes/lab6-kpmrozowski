@@ -36,6 +36,11 @@ bool isGreater(int i, int j)
     return (i > j);
 }
 
+bool czyWiekszeOdSiedem(int i)
+{
+    return (i > 7);
+}
+
 int main()
 {
     std::vector< int > wektor = makeRandomVector< int >(10, 0, 10);
@@ -44,4 +49,6 @@ int main()
     printVector(wektor);
     std::cout << "Liczba wystapien elementu 7:";
     std::cout << std::count(wektor.begin(), wektor.end(), 7) << std::endl;
+    std::cout << "Liczba wystapien elementow wiekszych od 7:" << std::endl;
+    std::cout << std::count_if(wektor.begin(), wektor.end(), czyWiekszeOdSiedem) << std::endl;
 }
