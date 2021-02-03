@@ -2,37 +2,20 @@
 #include <iostream>
 #include <string>
 
-/* zad II - std::search */
+/* Ćwiczenie III - std::reverse */
 
-bool isPiesekOrKotekIn()
+void makeInputReversed()
 {
     std::string s;
-    std::cout << "Podaj zmienna typu string" << std::endl;
+    std::cout << "Podaj ciag znakow" << std::endl;
     std::cin >> s;
-    std::string           piesek = "piesek";
-    std::string           kotek  = "kotek";
-    std::string::iterator it     = std::search(s.begin(), s.end(), piesek.begin(), piesek.end());
-    if (it == s.end()) {
-        it = std::search(s.begin(), s.end(), kotek.begin(), kotek.end());
-        if (it == s.end()) {
-            return false;
-        }
-        else {
-            std::cout << "Znaleziono podciag kotek" << std::endl;
-            return true;
-        }
-    }
-    else {
-        std::cout << "Znaleziono podciag piesek" << std::endl;
-        return true;
-    }
+    std::reverse(s.begin(), s.end());
+    std::cout << "Ciag znakow od tylu" << std::endl;
+    std::cout << s << std::endl;
 }
 
 int main()
 {
-    if (isPiesekOrKotekIn())
-        std::cout << "Podciag piesek lub podciag kotek znaleziony" << std::endl;
-    else
-        std::cout << "Podciag piesek lub podciag kotek nie zostal znaleziony" << std::endl;
+    makeInputReversed();
     return 0;
 }
