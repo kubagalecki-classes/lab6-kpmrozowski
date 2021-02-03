@@ -5,7 +5,7 @@
 #include <type_traits>
 #include <vector>
 
-/* Ćwiczenie IX - std::transform */
+/* Ćwiczenie X - std::partition i std::sort "sortowanie elementów wektora mniejszych od wartości" */
 
 template < typename T >
 std::vector< T > make_random_vector(size_t size, T min_value, T max_value)
@@ -27,29 +27,28 @@ std::vector< T > make_random_vector(size_t size, T min_value, T max_value)
     return ret_v;
 }
 
-void print_float_vector(std::vector< float > wektor)
+void print_vector(std::vector< int > wektor)
 {
-    for (const float i : wektor)
-        std::cout << std::fixed << std::setprecision(2) << i << std::endl;
+    for (const int i : wektor)
+        std::cout << i << " ";
     std::cout << std::endl;
 }
 
-void sinOfaVect()
+void partitionAndSort()
 {
-    std::vector< float > wektor = make_random_vector< float >(5, -1., 1.);
+    std::vector< int > wektor = make_random_vector< int >(15, 0, 9);
     std::cout << "Wygenerowany wektor:" << std::endl;
-    print_float_vector(wektor);
-    std::vector< float > wektorSinusow(5);
+    print_vector(wektor);
 
-    std::transform(
-        wektor.begin(), wektor.end(), wektorSinusow.begin(), [&](float i) { return sin(i); });
+    std::sort(wektor.begin(),
+              std::partition(wektor.begin(), wektor.end(), [](int i) { return (i > 5); }));
 
-    std::cout << "Wektor sinusow:" << std::endl;
-    print_float_vector(wektorSinusow);
+    std::cout << "Wygenerowany po partycji i posortowaniu liczb wiekszych od 6:" << std::endl;
+    print_vector(wektor);
 }
 
 int main()
 {
-    sinOfaVect();
+    partitionAndSort();
     return 0;
 }
