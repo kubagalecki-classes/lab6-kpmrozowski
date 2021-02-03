@@ -36,9 +36,12 @@ bool isGreater(int i, int j)
     return (i > j);
 }
 
-bool czyWiekszeOdSiedem(int i)
+// Global Variable
+int a;
+
+bool isGreaterThana(int i)
 {
-    return (i > 7);
+    return (i > a);
 }
 
 int main()
@@ -49,6 +52,8 @@ int main()
     printVector(wektor);
     std::cout << "Liczba wystapien elementu 7:";
     std::cout << std::count(wektor.begin(), wektor.end(), 7) << std::endl;
-    std::cout << "Liczba wystapien elementow wiekszych od 7:" << std::endl;
-    std::cout << std::count_if(wektor.begin(), wektor.end(), czyWiekszeOdSiedem) << std::endl;
+    std::cout << "Podaj liczbe:" << std::endl;
+    std::cin >> a;
+    std::cout << "Liczba wystapien elementow wiekszych od podanej liczby:" << std::endl;
+    std::cout << std::count_if(wektor.begin(), wektor.end(), isGreaterThana) << std::endl;
 }
